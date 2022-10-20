@@ -1,19 +1,107 @@
-product_name = input("Produk name: ").title()
-product_price = float(input("Prices: "))
-order_quantity = int(input("Order Quantity: "))
-buying_price = product_price * order_quantity
+import platform, os
 
-percent = input("Percent: ").split("%")
-profit = (product_price * float(percent[0])/100 )
+platform = platform.system()
+def program_title():
+    print("""
+Author : Moh.Jeli Almutaali || TI221
+#######################################
+#######################################
+######     Welcome To Program    ######
+#######################################
+#######################################
+   -----------+++====+++------------
+""")
 
-selling_price = product_price + profit
-item_sold = int(input("Item sold: "))
+def thank():
+    print("\nThank for using the program...\n")
 
-income = item_sold * selling_price
-total_profit = income - buying_price
+def clear_display():
+    if platform == "Linux":
+        os.system("clear")
+    if platform == "Windows":
+        os.system("cls")
 
-print("="*60)
+def sum_list(var_list,t_list):
+    total  = sum(var_list)
+    t_list.append(total)
+    
+clear_display()
+program_title()
 
-print(f"Product Name: {product_name}\nPrice: {product_price}\nOrder Quantity: {order_quantity}\n\
-Buying price: {buying_price}\nPercent: {percent[0]}%\nProfit: {profit}\nSelling Price: {selling_price}\n\
-Item sold: {item_sold}\nIncome: {income}\nTotal Profit: {total_profit}")
+prd_name, prd_price, ordr_quantity, buy_price = [],[],[],[]
+prcnt, prft, sllng_price, itm_sld, ttl_prft, ttl_income = [],[],[],[],[],[]
+
+t_income, t_profit = [],[]
+
+def main():
+    run = True
+    while run:
+        # nama produk
+        product_name = input("Produk name: ").title()
+        prd_name.append(product_name)
+        # harga produk
+        product_price = float(input("Prices: "))
+        prd_price.append(product_price)
+        # banyak barang yang diorder
+        order_quantity = int(input("Order Quantity: "))
+        ordr_quantity.append(order_quantity)
+
+        # harga beli = harga produk * jumlah order
+        buying_price = product_price * order_quantity
+        buy_price.append(buying_price)
+
+        # keuntungan
+        percent = input("Percent: ").split("%")
+        
+            
+        prcnt.append(percent)
+        
+        
+        profit = (product_price * float(percent[0])/100 )
+        prft.append(profit)
+
+        # harga jual = harga produk + profit
+        selling_price = product_price + profit
+        sllng_price.append(selling_price)
+        # barang yang terjual
+        item_sold = int(input("Item sold: "))
+        itm_sld.append(item_sold)
+        # total pendapatan
+        income = item_sold * selling_price
+        ttl_income.append(income)
+        # total keuntungan
+        total_profit = income - buying_price
+        ttl_prft.append(total_profit)
+        # Menginput lagi
+        enter_again = input("\nEnter Again, y/n: ").lower()
+        if enter_again == "y":
+            run = True
+        elif enter_again == "n":
+            run = False
+        else:
+            print("Invalid input")
+            
+    clear_display()
+
+    sum_list(ttl_income,t_income)
+    sum_list(ttl_prft, t_profit)
+
+    print("="*45)
+    print(f"Product Name   : {prd_name}\nPrice          : {prd_price}\nOrder Quantity : {ordr_quantity}\n\
+Buying price   : {buy_price} \nPercent        : ",end='')
+    if len(prcnt)> 1: 
+        for i in range(0, len(prcnt[0])):
+            print(prcnt[i][0],"%", end=", ")
+    else:
+        print(prcnt[0][0],"%")
+    print(f"\nMargin Profit  : {prft}\nSelling Price  : {sllng_price}\n\
+Item sold      : {itm_sld}\nIncome         : {ttl_income}\nTotal Income   : {t_income[0]}\nProfit         : {ttl_prft}\nTotal Profit   : {t_profit[0]}")
+    
+    tanda = 45
+    if len(prd_name) >= 4:
+        tanda += 35
+    print('='* tanda)
+    
+if __name__ =="__main__":
+    main()
+    thank()
